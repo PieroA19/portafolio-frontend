@@ -28,20 +28,55 @@ body {
   top: 0; /* Posiciona el header pegado al borde superior */
   z-index: 1000; /* Asegura que el header quede por encima de otros elementos con menor z-index */
   display: flex; /* Usa Flexbox para distribuir el contenido horizontalmente */
+  flex-wrap: wrap;
   justify-content: space-between; /* Separa los elementos del header en los extremos (logo a la izquierda, navegación a la derecha) */
   align-items: center; /* Centra verticalmente los elementos del header */
   padding: 1rem 2rem; /* Añade espacio interior arriba/abajo y a los lados del header */
+  width: 100%; /* Asegura que no se extienda más allá del viewport */
 
   backdrop-filter: blur(10px); /* Aplica un desenfoque al fondo del header para efecto de vidrio */
   -webkit-backdrop-filter: blur(10px); /* Soporte para navegadores WebKit (como Safari) */
   transition: background-color 0.3s ease, border-bottom 0.3s ease; /* Suaviza el cambio de color y borde al cambiar de tema */
+  box-sizing: border-box; /* Asegura que padding no cause overflow */
+}
+
+/* Evita overflow horizontal */
+body {
+  overflow-x: hidden;
+}
+
+/* Logo */
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Botón de tema */
+#theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: transform 0.4s ease;
+}
+#theme-toggle:active {
+  transform: rotate(180deg);
+}
+
+/* Botón hamburguesa */
+.menu-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  display: none; /* Solo visible en móvil */
+  cursor: pointer;
 }
 
 /* Modo claro */
 [data-theme="light"] .header {
   background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
   color: #111; /* Texto oscuro para contraste */
-  border-bottom: 0.5px solid rgba(0, 0, 0, 0.05); /* Línea inferior muy sutil para separación visual */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Línea inferior muy sutil para separación visual */
 }
 /* Modo claro */
 
@@ -49,7 +84,7 @@ body {
 html:not([data-theme="light"]) .header {
   background-color: rgba(15, 17, 23, 0.8); /* Fondo oscuro semitransparente */
   color: #fff; /* Texto blanco para contraste */
-  border-bottom: 0.5px solid rgba(255, 255, 255, 0.05); /* Línea inferior sutil en modo oscuro */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Línea inferior sutil en modo oscuro */
 }
 /* Modo oscuro */
 
@@ -58,6 +93,8 @@ html:not([data-theme="light"]) .header {
   list-style: none; /* Elimina los puntos de las listas */
   display: flex; /* Coloca los elementos de lista en una línea horizontal */
   gap: 1rem; /* Espacio entre cada enlace del menú */
+  padding: 0;
+  margin: 0;
 }
 /* Estilos para la lista de navegación */
 
@@ -68,6 +105,30 @@ html:not([data-theme="light"]) .header {
 }
 /* Estilos para los enlaces de navegación */
 
+/* Responsive */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+    color: var(--text-color); /* Siempre visible según el tema */
+  }
+
+  .nav {
+    width: 100%;
+    display: none; /* Oculta por defecto en móviles */
+  }
+
+  .nav.open {
+    display: block;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding-top: 1rem;
+  }
+}
+
 /* ---------------------------- CSS de Barra superior web ---------------------------- */
 
 
@@ -77,25 +138,40 @@ html:not([data-theme="light"]) .header {
 }
 
 .avatar {
-  width: 150px; /* Define el ancho de la imagen del avatar */
-  border-radius: 50%; /* Convierte la imagen en un círculo (si es cuadrada) */
+  width: 30vw;
+  max-width: 150px;
+  height: auto;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
 }
 
 form {
   display: flex; /* Usa Flexbox para organizar los elementos del formulario */
   flex-direction: column; /* Acomoda los elementos del formulario en columna (uno debajo del otro) */
   gap: 1rem; /* Deja espacio (1 rem) entre los elementos hijos */
+  width: 100%;
   max-width: 400px; /* Limita el ancho máximo del formulario a 400px */
   margin: auto; /* Centra el formulario horizontalmente dentro del contenedor */
+  padding: 0 1rem;
 }
 
 input, textarea {
-  padding: 0.75rem; /* Espaciado interno para que el texto no esté pegado al borde */
-  border: 1px solid var(--border-color); /* Borde sólido con el color definido por la variable del tema */
-  border-radius: 8px; /* Bordes redondeados para una apariencia más suave */
-  background-color: var(--input-bg); /* Color de fondo del input definido por el tema (claro u oscuro) */
-  color: var(--text-color); /* Color del texto dentro del input o textarea, dependiente del tema */
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  width: 100%;
+  box-sizing: border-box;
 }
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(100, 100, 255, 0.2);
+}
+
 
 button {
   background: var(--accent-color); /* Fondo del botón con el color de énfasis definido por el tema */
@@ -106,6 +182,21 @@ button {
   cursor: pointer; /* Cambia el cursor al estilo “puntero” cuando se pasa sobre el botón */
 }
 
+.buttonformulario{
+  background: var(--accent-color);
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  display: block;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+  box-sizing: border-box;
+}
 footer {
   text-align: center; /* Centra el texto del pie de página */
   padding: 2rem; /* Espacio interno alrededor del contenido */
@@ -114,57 +205,81 @@ footer {
 
 /* Íconos sociales */
 .socials {
-  margin-top: 1.5rem; /* Espacio superior entre el contenido anterior y la sección de íconos sociales */
-  display: flex; /* Usa Flexbox para alinear los íconos */
-  justify-content: center; /* Centra los íconos horizontalmente */
-  gap: 20px; /* Espacio entre cada ícono */
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
 .icon-wrapper {
-  position: relative; /* Establece contexto de posicionamiento para los íconos internos */
-  width: 30px; /* Ancho del contenedor de ícono */
-  height: 30px; /* Altura del contenedor de ícono */
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
 }
 
 .icon {
-  position: absolute; /* Posicionamiento absoluto dentro del contenedor .icon-wrapper */
-  top: 0; /* Posicionado en la parte superior del contenedor */
-  left: 0; /* Posicionado a la izquierda del contenedor */
-  width: 30px; /* Ancho del ícono */
-  height: 30px; /* Altura del ícono */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2rem;
+  height: 2rem;
+  transition: transform 0.3s ease;
 }
 
-/* Visibilidad por tema */
+.icon-wrapper:hover .icon {
+  transform: scale(1.1);
+}
+
+/* Tema claro/oscuro */
 .light-mode {
-  display: block; /* Muestra elementos con clase .light-mode por defecto */
+  display: block;
 }
 
 .dark-mode {
-  display: none; /* Oculta elementos con clase .dark-mode por defecto */
+  display: none;
 }
 
 [data-theme="light"] .light-mode {
-  display: none; /* Oculta .light-mode cuando se aplica el tema claro */
+  display: none;
 }
 
 [data-theme="light"] .dark-mode {
-  display: block; /* Muestra .dark-mode cuando se aplica el tema claro (por ejemplo, íconos invertidos) */
+  display: block;
 }
 
+/* Responsive spacing */
+@media (max-width: 480px) {
+  .socials {
+    gap: 12px;
+  }
+}
+
+
 /* ----------------------- Sobre mí ----------------------- */
-.contenedorSobreMi{
+.contenedorSobreMi {
   max-width: 1000px;
   margin: 0 auto;
   padding: 2rem;
 }
+
 .contenedorSobreMi h2 {
-  font-size: 2rem; /* Título */
+  font-size: clamp(1.5rem, 4vw, 2rem);
   font-weight: bold;
 }
+
 .contenedorSobreMi p {
-  font-size: 1.20rem; /* Párrafo */
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
   line-height: 1.6;
 }
+
+/* Ajustes específicos para móviles (si no usas clamp) */
+@media (max-width: 600px) {
+  .contenedorSobreMi {
+    padding: 1rem;
+  }
+}
+
 /* ----------------------- Sobre mí ----------------------- */
 
 
@@ -184,12 +299,20 @@ footer {
   padding: 1rem; /* Espacio interno dentro de cada columna */
   border-radius: 12px; /* Bordes redondeados en las esquinas para una apariencia más suave */
 }
+
+/* Responsive: 1 sola columna en móviles */
+@media (max-width: 768px) {
+  .work-container {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+}
 /* Estilo para cada columna */
 
 /* -------------------- Proyectos ---------------------- */
 .projects-grid {
   display: grid; /* Define otro grid dentro de la columna de proyectos */
-  grid-template-columns: 1fr 1fr; /* 2 columnas iguales para los project-cards */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 2 columnas iguales para los project-cards */
   gap: 1rem; /* Espacio entre tarjetas de proyectos */
 }
 

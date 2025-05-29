@@ -38,7 +38,10 @@
 <!-- Barra superior pagina web -->
   <header class="header">
     <h1 class="logo">Piero.dev</h1>
-    <nav>
+
+    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+
+    <nav class="nav">
       <ul class="nav-links">
         <li><a href="#about">Sobre mí</a></li>
         <li><a href="#projects">Proyectos</a></li>
@@ -46,8 +49,19 @@
         <li><a href="cv.pdf" download>CV</a></li>
       </ul>
     </nav>
+
     <button id="theme-toggle" aria-label="Cambiar a modo oscuro">🌙</button>
   </header>
+  
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav');
+
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
+  </script>
+
 <!-- Barra superior pagina web -->
 
 
@@ -114,7 +128,7 @@
         <input type="text" placeholder="Nombre" required />
         <input type="email" placeholder="Correo" required />
         <textarea placeholder="Mensaje" required></textarea>
-        <button type="submit">Enviar Mensaje</button>
+        <button class="buttonformulario" type="submit">Enviar Mensaje</button>
       </form>
 
       <div class="socials">
