@@ -33,7 +33,7 @@ document.querySelector('form').addEventListener('submit', async (e) => {
   const message = e.target[2].value;
 
   try {
-    const res = await fetch('https://portafolio-backend-g73j.onrender.com', {
+    const res = await fetch('https://portafolio-backend-g73j.onrender.com/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, message }),
