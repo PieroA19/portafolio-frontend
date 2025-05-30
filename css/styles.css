@@ -2,6 +2,7 @@
   --bg-color: #0f1117;
   --text-color: #ffffff;
   --accent-color: #e6007a;
+  --accent-color-hover: #6200ea;
   --border-color: #444444;
   --input-bg: #1a1d26;
 }
@@ -10,6 +11,7 @@
   --bg-color: #ffffff;
   --text-color: #111111;
   --accent-color: #6200ea;
+  --accent-color-hover: #e6007a;
   --border-color: #cccccc;
   --input-bg: #f9f9f9;
 }
@@ -53,11 +55,14 @@ body {
 
 /* Botón de tema */
 #theme-toggle {
-  background: none;
+  background: transparent;
   border: none;
   font-size: 1.25rem;
   cursor: pointer;
-  transition: transform 0.4s ease;
+  transition: transform 0.2s ease;
+}
+#theme-toggle:hover {
+  transform: scale(1.2); /* Aumenta el tamaño un 20% al pasar el cursor */
 }
 #theme-toggle:active {
   transform: rotate(180deg);
@@ -194,9 +199,14 @@ button {
   margin: 0 auto;
   display: block;
   font-size: 1rem;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease; /* transición también para el scale */
   box-sizing: border-box;
 }
+.buttonformulario:hover {
+  background: var(--accent-color-hover); /* Color más oscuro o distinto al hacer hover */
+  transform: scale(1.05); /* agranda el botón un 5% */
+}
+
 footer {
   text-align: center; /* Centra el texto del pie de página */
   padding: 2rem; /* Espacio interno alrededor del contenido */
