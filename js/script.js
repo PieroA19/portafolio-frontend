@@ -96,26 +96,41 @@ document.querySelector('form').addEventListener('submit', async (e) => {
   });
 
   try {
-    // Simulamos un envío exitoso ya que la URL original no está disponible
-    setTimeout(() => {
+    const res = await fetch('https://portafolio-backend-g73j.onrender.com/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, message }),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
       Swal.fire({
         icon: 'success',
         title: 'Mensaje enviado ✅',
         text: '¡Gracias por contactarme! Te responderé pronto.',
-        confirmButtonColor: '#0f172a',
-        background: 'var(--bg-color)',
-        color: 'var(--text-color)'
+        confirmButtonColor: '#0f172a', // Azul oscuro profesional
+        background: '#f8fafc',         // Color claro elegante
+        color: '#0f172a'
       });
       e.target.reset();
-    }, 1500);
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al enviar',
+        text: data.error || 'Algo salió mal. Inténtalo nuevamente.',
+        confirmButtonColor: '#e11d48', // Rojo profesional
+        background: '#fef2f2',
+        color: '#991b1b'
+      });
+    }
   } catch (err) {
     Swal.fire({
       icon: 'error',
       title: 'Error de red',
       text: 'No se pudo enviar el mensaje. Verifica tu conexión a internet.',
       confirmButtonColor: '#e11d48',
-      background: 'var(--bg-color)',
-      color: 'var(--text-color)'
+      background: '#fef2f2',
+      color: '#991b1b'
     });
     console.error(err);
   }
