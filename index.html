@@ -6,24 +6,9 @@
   <meta name="description" content="Portafolio profesional de Piero, estudiante de Ingeniería de Sistemas, enfocado en desarrollo web y soluciones digitales.">
   <meta name="keywords" content="portafolio, desarrollo web, Piero, ingeniería de sistemas, programador, frontend, backend, fullstack">
   <meta name="author" content="Piero Allccaco">
-  <meta property="og:title" content="Portafolio de Piero | Desarrollador Web">
-  <meta property="og:description" content="Conoce los proyectos y habilidades de Piero, estudiante de Ingeniería de Sistemas apasionado por la tecnología.">
-  <meta property="og:image" content="https://github.com/PieroA19/assets/preview.png">
-  <meta property="og:url" content="https://github.com/PieroA19">
-  <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Portafolio de Piero | Desarrollador Web">
-  <meta name="twitter:description" content="Explora los proyectos y habilidades de Piero, estudiante de Ingeniería de Sistemas.">
-  <meta name="twitter:image" content="https://github.com/PieroA19/assets/preview.png">
-  <meta name="theme-color" content="#0f172a">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  
   <title>Portafolio de Piero | Desarrollador Web</title>
-  
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <!-- Preloader -->
@@ -35,25 +20,31 @@
   <header class="header">
     <h1 class="logo">Piero.dev</h1>
 
-    <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+    <button class="menu-toggle" aria-label="Abrir menú">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
 
     <nav class="nav">
       <ul class="nav-links">
         <li><a href="#about">Sobre mí</a></li>
         <li><a href="#work">Proyectos</a></li>
         <li><a href="#contact">Contacto</a></li>
-        <li><a href="CV Piero Allccaco.pdf" download>CV</a></li>
+        <li><a href="CV Piero Allccaco.pdf" download class="btn-cv">Descargar CV</a></li>
       </ul>
     </nav>
 
-    <button id="theme-toggle" aria-label="Cambiar tema">🌙</button>
+    <button id="theme-toggle" aria-label="Cambiar tema">
+      <i class="fas fa-moon"></i>
+    </button>
   </header>
 
   <main>
     <section id="about" class="section">
       <div class="contenedorSobreMi">
-        <img src="./assets/avatar.png" alt="Avatar de Piero sonriendo" class="avatar" loading="lazy">
-        <h2>👋 ¡Hola! Soy Piero</h2>
+        <img src="assets/avatar.png" alt="Avatar de Piero sonriendo" class="avatar" loading="lazy">
+        <h2><span class="wave">👋</span> ¡Hola! Soy Piero</h2>
         <p>Estudiante de Ingeniería de Sistemas, apasionado por el desarrollo web y la tecnología. Me entusiasma construir soluciones digitales eficientes, intuitivas y escalables que mejoren la vida de las personas y optimicen procesos. Exploro constantemente nuevas herramientas y lenguajes para mejorar mis habilidades como desarrollador. Este portafolio es una muestra de los proyectos, aprendizajes y desafíos que han marcado mi formación profesional.</p>
       </div>
     </section>
@@ -64,35 +55,63 @@
           <h2>Proyectos</h2>
           <div class="projects-grid">
             <div class="project-card">
+              <div class="project-icon">
+                <i class="fas fa-tasks"></i>
+              </div>
               <h3>Gestor de Tareas</h3>
               <p>App para gestionar tareas. Hecha con HTML, CSS y JS.</p>
               <div class="project-links">
-                <a href="https://github.com/PieroA19" target="_blank" rel="noopener noreferrer">GitHub</a>
-                <a href="https://piero-gestor-tareas.netlify.app" target="_blank" rel="noopener noreferrer">Demo</a>
+                <a href="https://github.com/PieroA19" target="_blank" rel="noopener noreferrer">
+                  <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="https://piero-gestor-tareas.netlify.app" target="_blank" rel="noopener noreferrer">
+                  <i class="fas fa-external-link-alt"></i> Demo
+                </a>
               </div>
             </div>
             <div class="project-card">
+              <div class="project-icon">
+                <i class="fas fa-users"></i>
+              </div>
               <h3>Gestor de Usuarios</h3>
               <p>Gestor de users simple con HTML, CSS y JavaScript.</p>
               <div class="project-links">
-                <a href="https://github.com/PieroA19" target="_blank">GitHub</a>
-                <a href="https://piero-gestor-usuarios.netlify.app/" target="_blank" rel="noopener noreferrer">Demo</a>
+                <a href="https://github.com/PieroA19" target="_blank">
+                  <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="https://piero-gestor-usuarios.netlify.app/" target="_blank" rel="noopener noreferrer">
+                  <i class="fas fa-external-link-alt"></i> Demo
+                </a>
               </div>
             </div>
             <div class="project-card">
+              <div class="project-icon">
+                <i class="fas fa-shopping-cart"></i>
+              </div>
               <h3>E-commerce</h3>
               <p>Tienda online con carrito de compras y sistema de pago.</p>
               <div class="project-links">
-                <a href="https://github.com/PieroA19" target="_blank">GitHub</a>
-                <a href="#" target="_blank" rel="noopener noreferrer">Demo</a>
+                <a href="https://github.com/PieroA19" target="_blank">
+                  <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="#" target="_blank" rel="noopener noreferrer">
+                  <i class="fas fa-external-link-alt"></i> Demo
+                </a>
               </div>
             </div>
             <div class="project-card">
+              <div class="project-icon">
+                <i class="fas fa-blog"></i>
+              </div>
               <h3>Blog Personal</h3>
               <p>Blog con sistema de comentarios y panel de administración.</p>
               <div class="project-links">
-                <a href="https://github.com/PieroA19" target="_blank">GitHub</a>
-                <a href="#" target="_blank" rel="noopener noreferrer">Demo</a>
+                <a href="https://github.com/PieroA19" target="_blank">
+                  <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="#" target="_blank" rel="noopener noreferrer">
+                  <i class="fas fa-external-link-alt"></i> Demo
+                </a>
               </div>
             </div>
           </div>
@@ -100,22 +119,46 @@
 
         <div class="column animate-on-scroll">
           <h2>Habilidades Técnicas</h2>
-          <ul class="skills-list">
-            <li>HTML / CSS</li>
-            <li>JavaScript</li>
-            <li>React</li>
-            <li>Git y GitHub</li>
-            <li>Figma</li>
-            <li>Angular</li>
-            <li>Node.js</li>
-            <li>Python</li>
-            <li>C#</li>
-            <li>MySQL</li>
-            <li>SQL</li>
-            <li>Oracle SQL</li>
-            <li>MongoDB</li>
-            <li>TypeScript</li>
-          </ul>
+          <div class="skills-container">
+            <div class="skill-category">
+              <h3>Frontend</h3>
+              <ul class="skills-list">
+                <li><i class="fab fa-html5"></i> HTML5</li>
+                <li><i class="fab fa-css3-alt"></i> CSS3</li>
+                <li><i class="fab fa-js"></i> JavaScript</li>
+                <li><i class="fab fa-react"></i> React</li>
+                <li><i class="fab fa-angular"></i> Angular</li>
+                <li><i class="fab fa-vuejs"></i> Vue.js</li>
+              </ul>
+            </div>
+            <div class="skill-category">
+              <h3>Backend</h3>
+              <ul class="skills-list">
+                <li><i class="fab fa-node"></i> Node.js</li>
+                <li><i class="fab fa-python"></i> Python</li>
+                <li><i class="fas fa-database"></i> Express</li>
+                <li><i class="fas fa-server"></i> C#</li>
+              </ul>
+            </div>
+            <div class="skill-category">
+              <h3>Bases de Datos</h3>
+              <ul class="skills-list">
+                <li><i class="fas fa-database"></i> MySQL</li>
+                <li><i class="fas fa-database"></i> MongoDB</li>
+                <li><i class="fas fa-database"></i> SQL Server</li>
+                <li><i class="fas fa-database"></i> Oracle</li>
+              </ul>
+            </div>
+            <div class="skill-category">
+              <h3>Herramientas</h3>
+              <ul class="skills-list">
+                <li><i class="fab fa-git"></i> Git</li>
+                <li><i class="fab fa-github"></i> GitHub</li>
+                <li><i class="fab fa-figma"></i> Figma</li>
+                <li><i class="fas fa-terminal"></i> Terminal</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -142,19 +185,26 @@
         </div>
       </div>
 
+
       <div class="socials">
         <a href="https://github.com/PieroA19" target="_blank" rel="noopener noreferrer" class="social-link">
-          <img src="assets/github-dark.png" alt="Icono de GitHub" loading="lazy">
+          <i class="fab fa-github"></i>
         </a>
         <a href="https://www.linkedin.com/in/piero-allccaco-113253289" target="_blank" rel="noopener noreferrer" class="social-link">
-          <img src="assets/linkedin-dark.png" alt="Icono de LinkedIn" loading="lazy">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-link">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link">
+          <i class="fab fa-instagram"></i>
         </a>
       </div>
     </section>
   </main>
 
   <footer>
-    <p>&copy; <span id="current-year"></span> Piero. Todos los derechos reservados.</p>
+    <p>&copy; <span id="current-year"></span> Piero Allccaco. Todos los derechos reservados.</p>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

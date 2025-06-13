@@ -1,4 +1,3 @@
-// script.js
 // Preloader
 window.addEventListener('load', function() {
   const preloader = document.getElementById('preloader');
@@ -8,26 +7,26 @@ window.addEventListener('load', function() {
   }, 800);
 });
 
-// Menú móvil
+// Menu toggle
 const toggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
 
 toggle.addEventListener('click', () => {
+  toggle.classList.toggle('active');
   nav.classList.toggle('open');
-  toggle.textContent = nav.classList.contains('open') ? '✕' : '☰';
 });
 
-// Tema oscuro/claro con localStorage
+// Theme toggle with localStorage
 const toggleBtn = document.getElementById('theme-toggle');
 const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 const currentTheme = localStorage.getItem('theme') || (prefersDarkScheme.matches ? 'dark' : 'light');
     
 if (currentTheme === 'light') {
   document.documentElement.setAttribute('data-theme', 'light');
-  toggleBtn.textContent = '☀️';
+  toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
 } else {
   document.documentElement.removeAttribute('data-theme');
-  toggleBtn.textContent = '🌙';
+  toggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
 }
 
 toggleBtn.addEventListener('click', () => {
@@ -35,15 +34,15 @@ toggleBtn.addEventListener('click', () => {
   if (currentTheme === 'light') {
     document.documentElement.removeAttribute('data-theme');
     localStorage.setItem('theme', 'dark');
-    toggleBtn.textContent = '🌙';
+    toggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
   } else {
     document.documentElement.setAttribute('data-theme', 'light');
     localStorage.setItem('theme', 'light');
-    toggleBtn.textContent = '☀️';
+    toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
   }
 });
 
-// Año actual
+// Current year
 document.addEventListener("DOMContentLoaded", function() {
   const yearSpan = document.getElementById("current-year");
   if (yearSpan) {
@@ -51,13 +50,13 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
-// Animaciones al hacer scroll
+// Scroll animations
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
       
-      // Animación para habilidades
+      // Animate skills
       if (entry.target.querySelector('.skills-list')) {
         const skills = entry.target.querySelectorAll('.skills-list li');
         skills.forEach((skill, index) => {
@@ -136,7 +135,7 @@ document.querySelector('form').addEventListener('submit', async (e) => {
   }
 });
 
-// Smooth scroll para enlaces internos
+// Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     e.preventDefault();
@@ -147,11 +146,23 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         behavior: 'smooth'
       });
       
-      // Cerrar menú móvil si está abierto
+      // Close mobile menu if open
       if (nav.classList.contains('open')) {
         nav.classList.remove('open');
-        toggle.textContent = '☰';
+        toggle.classList.remove('active');
       }
     }
   });
+});
+
+// Header scroll effect
+window.addEventListener('scroll', () => {
+  const header = document.querySelector('.header');
+  if (window.scrollY > 100) {
+    header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+    header.style.padding = '0.8rem 5%';
+  } else {
+    header.style.boxShadow = 'none';
+    header.style.padding = '1.2rem 5%';
+  }
 });
