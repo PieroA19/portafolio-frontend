@@ -1,395 +1,735 @@
+/* styles.css */
 :root {
   --bg-color: #0f1117;
   --text-color: #ffffff;
   --accent-color: #e6007a;
-  --accent-color-hover: #6200ea;
+  --accent-color-hover: #ff3399;
+  --accent-light: rgba(230, 0, 122, 0.1);
   --border-color: #444444;
   --input-bg: #1a1d26;
+  --card-bg: rgba(30, 33, 46, 0.6);
+  --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  --light-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 [data-theme="light"] {
   --bg-color: #ffffff;
   --text-color: #111111;
   --accent-color: #6200ea;
-  --accent-color-hover: #e6007a;
+  --accent-color-hover: #7d29fa;
+  --accent-light: rgba(98, 0, 234, 0.1);
   --border-color: #cccccc;
   --input-bg: #f9f9f9;
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --shadow: 0 10px 20px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.05);
+  --light-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  margin: 0; /* Elimina el margen predeterminado del navegador para que el contenido inicie en el borde de la ventana */
-  font-family: 'Inter', sans-serif; /* Establece la fuente principal como 'Inter' y, si no está disponible, usa cualquier fuente sans-serif */
-  background-color: var(--bg-color); /* Aplica el color de fondo usando la variable definida según el tema actual (oscuro o claro) */
-  color: var(--text-color); /* Establece el color del texto utilizando la variable del tema actual */
-  transition: background-color 0.3s, color 0.3s; /* Reduce la duración de la transición a 0.2 segundos para mejorar el rendimiento en dispositivos de gama baja */
-}
-
-/* ---------------------------- CSS de Barra superior web ---------------------------- */
-.header {
-  position: sticky; /* Hace que el header se quede fijo en la parte superior mientras haces scroll */
-  top: 0; /* Posiciona el header pegado al borde superior */
-  z-index: 1000; /* Asegura que el header quede por encima de otros elementos con menor z-index */
-  display: flex; /* Usa Flexbox para distribuir el contenido horizontalmente */
-  flex-wrap: wrap;
-  justify-content: space-between; /* Separa los elementos del header en los extremos (logo a la izquierda, navegación a la derecha) */
-  align-items: center; /* Centra verticalmente los elementos del header */
-  padding: 1rem 2rem; /* Añade espacio interior arriba/abajo y a los lados del header */
-  width: 100%; /* Asegura que no se extienda más allá del viewport */
-
-  backdrop-filter: blur(10px); /* Aplica un desenfoque al fondo del header para efecto de vidrio */
-  -webkit-backdrop-filter: blur(10px); /* Soporte para navegadores WebKit (como Safari) */
-  transition: background-color 0.3s ease, border-bottom 0.3s ease; /* Suaviza el cambio de color y borde al cambiar de tema */
-  box-sizing: border-box; /* Asegura que padding no cause overflow */
-}
-
-/* Evita overflow horizontal */
-body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
   overflow-x: hidden;
+  line-height: 1.6;
 }
 
-/* Logo */
+/* Preloader */
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid var(--accent-color);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loader-text {
+  margin-top: 20px;
+  color: var(--text-color);
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Header */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background-color 0.3s ease, border-bottom 0.3s ease;
+  box-sizing: border-box;
+  box-shadow: var(--light-shadow);
+}
+
+/* Modo claro */
+[data-theme="light"] .header {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Modo oscuro */
+html:not([data-theme="light"]) .header {
+  background-color: rgba(15, 17, 23, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
 .logo {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
+  background: linear-gradient(45deg, var(--accent-color), #ff6b6b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: slideIn 0.8s ease-out;
 }
 
 /* Botón de tema */
 #theme-toggle {
   background: transparent;
   border: none;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.3s ease;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--accent-light);
 }
+
 #theme-toggle:hover {
-  transform: scale(1.2); /* Aumenta el tamaño un 20% al pasar el cursor */
+  transform: rotate(15deg) scale(1.1);
 }
+
 #theme-toggle:active {
-  transform: rotate(180deg);
+  transform: rotate(180deg) scale(0.9);
 }
 
 /* Botón hamburguesa */
 .menu-toggle {
   background: none;
   border: none;
-  font-size: 1.5rem;
-  display: none; /* Solo visible en móvil */
+  font-size: 1.8rem;
+  display: none;
   cursor: pointer;
+  transition: transform 0.3s ease;
+  color: var(--text-color);
 }
 
-/* Modo claro */
-[data-theme="light"] .header {
-  background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
-  color: #111; /* Texto oscuro para contraste */
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Línea inferior muy sutil para separación visual */
+.menu-toggle:hover {
+  transform: scale(1.1);
 }
-/* Modo claro */
 
-/* Modo oscuro */
-html:not([data-theme="light"]) .header {
-  background-color: rgba(15, 17, 23, 0.8); /* Fondo oscuro semitransparente */
-  color: #fff; /* Texto blanco para contraste */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Línea inferior sutil en modo oscuro */
+/* Nav */
+.nav {
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
-/* Modo oscuro */
 
-/* Estilos para la lista de navegación */
 .nav-links {
-  list-style: none; /* Elimina los puntos de las listas */
-  display: flex; /* Coloca los elementos de lista en una línea horizontal */
-  gap: 1rem; /* Espacio entre cada enlace del menú */
+  list-style: none;
+  display: flex;
+  gap: 1.8rem;
   padding: 0;
   margin: 0;
 }
-/* Estilos para la lista de navegación */
 
-/* Estilos para los enlaces de navegación */
+.nav-links li {
+  position: relative;
+}
+
 .nav-links a {
-  color: var(--text-color); /* Usa una variable CSS definida para el color del texto (se adapta al tema) */
-  text-decoration: none; /* Quita el subrayado predeterminado de los enlaces */
-}
-/* Estilos para los enlaces de navegación */
-
-/* Responsive */
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-    color: var(--text-color); /* Siempre visible según el tema */
-  }
-
-  .nav {
-    width: 100%;
-    display: none; /* Oculta por defecto en móviles */
-  }
-
-  .nav.open {
-    display: block;
-  }
-
-  .nav-links {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-    padding-top: 1rem;
-  }
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  position: relative;
+  transition: color 0.3s;
 }
 
-/* ---------------------------- CSS de Barra superior web ---------------------------- */
-
-
-.section {
-  padding: 2rem; /* Agrega espacio interno (padding) alrededor del contenido de la sección */
-  text-align: center; /* Centra el texto horizontalmente dentro de la sección */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-color);
+  transition: width 0.3s ease;
 }
 
-.avatar {
-  width: 30vw;
-  max-width: 150px;
-  height: auto;
-  border-radius: 50%;
-  display: block;
-  margin: 0 auto;
+.nav-links a:hover {
+  color: var(--accent-color);
 }
 
-form {
-  display: flex; /* Usa Flexbox para organizar los elementos del formulario */
-  flex-direction: column; /* Acomoda los elementos del formulario en columna (uno debajo del otro) */
-  gap: 1rem; /* Deja espacio (1 rem) entre los elementos hijos */
+.nav-links a:hover::after {
   width: 100%;
-  max-width: 400px; /* Limita el ancho máximo del formulario a 400px */
-  margin: auto; /* Centra el formulario horizontalmente dentro del contenedor */
+}
+
+/* Main */
+main {
+  max-width: 1400px;
+  margin: 0 auto;
   padding: 0 1rem;
 }
 
-input, textarea {
-  padding: 0.75rem;
+.section {
+  padding: 6rem 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Sobre mí */
+.contenedorSobreMi {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: fadeIn 1s ease-out;
+}
+
+.avatar {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 2rem;
+  border: 3px solid var(--accent-color);
+  box-shadow: 0 0 30px rgba(230, 0, 122, 0.3);
+  animation: float 4s ease-in-out infinite;
+}
+
+.contenedorSobreMi h2 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  margin-bottom: 1.5rem;
+  background: linear-gradient(45deg, var(--accent-color), #ff6b6b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.contenedorSobreMi p {
+  font-size: clamp(1.1rem, 2.5vw, 1.2rem);
+  line-height: 1.8;
+  max-width: 700px;
+  margin-bottom: 2rem;
+}
+
+/* Work Container */
+.work-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.column {
+  background-color: var(--card-bg);
+  padding: 2rem;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: var(--transition);
+}
+
+[data-theme="light"] .column {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.column:hover {
+  transform: translateY(-10px);
+}
+
+.column h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.column h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: var(--accent-color);
+  border-radius: 2px;
+}
+
+/* Proyectos */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  background-color: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.8rem;
+  border-radius: 12px;
+  text-align: left;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="light"] .project-card {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 0;
+  background: var(--accent-color);
+  transition: height 0.6s ease;
+}
+
+.project-card:hover::before {
+  height: 100%;
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+}
+
+.project-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+  position: relative;
+  z-index: 1;
+}
+
+.project-card p {
+  margin-bottom: 1.2rem;
+  color: var(--text-color);
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+}
+
+.project-links {
+  display: flex;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.project-links a {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.3rem 0;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.project-links a::after {
+  content: '→';
+  margin-left: 5px;
+  transition: transform 0.3s;
+}
+
+.project-links a:hover::after {
+  transform: translateX(5px);
+}
+
+/* Habilidades */
+.skills-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+.skills-list li {
+  background: var(--accent-light);
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  color: var(--accent-color);
+  text-align: center;
+  font-weight: 600;
+  transition: var(--transition);
+  transform: scale(0);
+  animation: growIn 0.5s forwards;
+  opacity: 0;
+}
+
+@keyframes growIn {
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.skills-list li:hover {
+  background: var(--accent-color);
+  color: white;
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(230, 0, 122, 0.3);
+}
+
+[data-theme="light"] .skills-list li:hover {
+  box-shadow: 0 5px 15px rgba(98, 0, 234, 0.2);
+}
+
+/* Contacto */
+#contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#contact h2 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  margin-bottom: 2.5rem;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+}
+
+#contact h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--accent-color);
+  border-radius: 2px;
+}
+
+.contact-container {
+  display: flex;
+  gap: 3rem;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.contact-form {
+  flex: 1;
+  background: var(--card-bg);
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="light"] .contact-form {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 1rem;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   background-color: var(--input-bg);
   color: var(--text-color);
-  width: 100%;
-  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  transition: border 0.3s;
 }
 
-input:focus, textarea:focus {
-  outline: none;
+.form-group label {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: var(--text-color);
+  opacity: 0.7;
+  transition: all 0.3s;
+  pointer-events: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group input:not(:placeholder-shown),
+.form-group textarea:not(:placeholder-shown) {
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 2px rgba(100, 100, 255, 0.2);
+  outline: none;
 }
 
-
-button {
-  background: var(--accent-color); /* Fondo del botón con el color de énfasis definido por el tema */
-  color: white; /* Color del texto del botón */
-  padding: 0.75rem; /* Espaciado interno del botón */
-  border: none; /* Elimina el borde por defecto */
-  border-radius: 8px; /* Bordes redondeados para mejor estética */
-  cursor: pointer; /* Cambia el cursor al estilo “puntero” cuando se pasa sobre el botón */
+.form-group input:focus + label,
+.form-group textarea:focus + label,
+.form-group input:not(:placeholder-shown) + label,
+.form-group textarea:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 10px;
+  font-size: 0.8rem;
+  background: var(--bg-color);
+  padding: 0 5px;
+  color: var(--accent-color);
+  opacity: 1;
 }
 
-.buttonformulario{
+textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.buttonformulario {
   background: var(--accent-color);
   color: white;
-  padding: 0.75rem;
+  padding: 1rem;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
   width: 100%;
   max-width: 300px;
   margin: 0 auto;
   display: block;
-  font-size: 1rem;
-  transition: background 0.3s ease, transform 0.2s ease; /* transición también para el scale */
-  box-sizing: border-box;
+  box-shadow: 0 5px 15px rgba(230, 0, 122, 0.4);
 }
+
+[data-theme="light"] .buttonformulario {
+  box-shadow: 0 5px 15px rgba(98, 0, 234, 0.3);
+}
+
 .buttonformulario:hover {
-  background: var(--accent-color-hover); /* Color más oscuro o distinto al hacer hover */
-  transform: scale(1.05); /* agranda el botón un 5% */
+  background: var(--accent-color-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(230, 0, 122, 0.6);
 }
 
-footer {
-  text-align: center; /* Centra el texto del pie de página */
-  padding: 2rem; /* Espacio interno alrededor del contenido */
-  font-size: 0.9rem; /* Tamaño de fuente ligeramente más pequeño para el footer */
+[data-theme="light"] .buttonformulario:hover {
+  box-shadow: 0 8px 20px rgba(98, 0, 234, 0.5);
 }
 
-/* Íconos sociales */
+.buttonformulario:active {
+  transform: translateY(0);
+}
+
 .socials {
-  margin-top: 1.5rem;
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 2rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;
 }
 
-.icon-wrapper {
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  transition: var(--transition);
   position: relative;
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
+  overflow: hidden;
 }
 
-.icon {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 2rem;
-  height: 2rem;
-  transition: transform 0.3s ease;
+.social-link:hover {
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: 0 5px 15px rgba(230, 0, 122, 0.4);
 }
 
-.icon-wrapper:hover .icon {
-  transform: scale(1.1);
+[data-theme="light"] .social-link:hover {
+  box-shadow: 0 5px 15px rgba(98, 0, 234, 0.3);
 }
 
-/* Tema claro/oscuro */
-.light-mode {
-  display: block;
+.social-link img {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s;
 }
 
-.dark-mode {
-  display: none;
+.social-link:hover img {
+  transform: scale(1.2);
 }
 
-[data-theme="light"] .light-mode {
-  display: none;
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  opacity: 0.7;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-[data-theme="light"] .dark-mode {
-  display: block;
+[data-theme="light"] footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* Responsive spacing */
-@media (max-width: 480px) {
-  .socials {
-    gap: 12px;
+/* Responsive */
+@media (max-width: 992px) {
+  .contact-container {
+    flex-direction: column;
+  }
+  
+  .work-container {
+    gap: 2rem;
   }
 }
 
-
-/* ----------------------- Sobre mí ----------------------- */
-.contenedorSobreMi {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-.contenedorSobreMi h2 {
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  font-weight: bold;
-}
-
-.contenedorSobreMi p {
-  font-size: clamp(1rem, 2.5vw, 1.2rem);
-  line-height: 1.6;
-}
-
-/* Ajustes específicos para móviles (si no usas clamp) */
-@media (max-width: 600px) {
-  .contenedorSobreMi {
+@media (max-width: 768px) {
+  .header {
     padding: 1rem;
   }
-}
+  
+  .menu-toggle {
+    display: block;
+  }
 
-/* ----------------------- Sobre mí ----------------------- */
+  .nav {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: var(--bg-color);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 1rem 0;
+    transform: translateY(-150%);
+    z-index: 999;
+  }
 
+  .nav.open {
+    transform: translateY(0);
+  }
 
-/* ----------------------------- Contenedor principal de las dos primeras columnas ----------------------------- */
-.work-container {
-  display: grid; /* Define un grid layout para colocar elementos en columnas y filas */
-  grid-template-columns: 1fr 1fr; /* Divide el contenedor en 2 columnas iguales (1fr = una fracción del espacio disponible) */
-  gap: 2rem; /* Espacio entre las columnas (y filas si las hubiera) */
-  max-width: 1300px; /* Limita el ancho máximo del contenedor para que no sea muy grande en pantallas grandes */
-  margin: 0 auto; /* Centra horizontalmente el contenedor en la página */
-  padding: 2rem; /* Espaciado interno alrededor del contenido (en todos los lados) */
-}
+  .nav-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
 
-/* Estilo para cada columna */
-.column {
-  background-color: rgba(255, 255, 255, 0); /* Fondo transparente (puedes cambiarlo si deseas un color claro) */
-  padding: 1rem; /* Espacio interno dentro de cada columna */
-  border-radius: 12px; /* Bordes redondeados en las esquinas para una apariencia más suave */
-}
-
-/* Responsive: 1 sola columna en móviles */
-@media (max-width: 768px) {
   .work-container {
     grid-template-columns: 1fr;
-    padding: 1rem;
-  }
-}
-/* Estilo para cada columna */
-
-/* -------------------- Proyectos ---------------------- */
-.projects-grid {
-  display: grid; /* Define otro grid dentro de la columna de proyectos */
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 2 columnas iguales para los project-cards */
-  gap: 1rem; /* Espacio entre tarjetas de proyectos */
-}
-
-.project-card {
-  background-color: var(--bg-color); /* Usa una variable CSS para el fondo (adaptable al tema oscuro o claro) */
-  color: var(--text-color); /* Usa una variable CSS para el color del texto */
-  border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil alrededor de la tarjeta (mejor en modo oscuro) */
-  padding: 1rem; /* Espaciado interno dentro de cada tarjeta */
-  border-radius: 8px; /* Bordes redondeados para una apariencia moderna */
-  text-align: left; /* Alinea el texto a la izquierda dentro de la tarjeta */
-  transition: transform 0.2s; /* Agrega una animación suave al hacer hover (transformaciones) */
-}
-
-[data-theme="light"] .project-card {
-  background-color: rgba(0, 0, 0, 0.05); /* Cambia el fondo si el tema es claro */
-  border: 1px solid rgba(0, 0, 0, 0.05); /* Borde sutil más oscuro para modo claro */
-}
-
-.project-card:hover {
-  transform: scale(1.02); /* Efecto de zoom leve cuando el mouse pasa por encima */
-}
-
-.project-card a {
-  color: var(--accent-color); /* Usa una variable CSS para destacar el enlace (por ejemplo, azul o naranja) */
-  text-decoration: none; /* Elimina el subrayado del enlace */
-  font-weight: bold; /* Hace que el enlace sea más visible */
-}
-
-.project-card a:hover {
-  text-decoration: underline; /* Al pasar el mouse, aparece el subrayado para mejorar la usabilidad */
-}
-/* -------------------- Proyectos ---------------------- */
-
-/* --------------- lista de habilidades ---------------- */
-.skills-list {
-  display: grid; /* Organiza los elementos en una cuadrícula */
-  grid-template-columns: repeat(2, 1fr); /* Muestra 2 elementos por fila */
-  gap: 0.75rem 1.5rem; /* Espaciado vertical de 0.75rem y horizontal de 1.5rem */
-  list-style: none; /* Elimina los puntos por defecto de la lista */
-  padding: 0; /* Elimina el espacio interno predeterminado */
-  margin-top: 1rem; /* Agrega espacio superior antes de la lista */
-}
-
-.skills-list li {
-  background-color: var(--accent-color); /* Fondo con color destacado (usualmente llamativo) */
-  padding: 0.5rem 1rem; /* Espaciado interno: vertical 0.5rem y horizontal 1rem */
-  border-radius: 8px; /* Bordes redondeados para cada etiqueta de habilidad */
-  color: white; /* Color del texto blanco para mejor contraste */
-  text-align: center; /* Centra el texto dentro del `li` */
-  font-weight: 600; /* Hace el texto un poco más grueso */
-}
-/* --------------- lista de habilidades ---------------- */
-
-/* Responsive: columnas apiladas en móvil */
-@media (max-width: 768px) {
-  .work-container {
-    grid-template-columns: 1fr; /* En pantallas pequeñas, apila las columnas en una sola */
+    padding: 0 1rem;
   }
 
+  .section {
+    padding: 4rem 1rem;
+  }
+
+  .social-link {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+@media (max-width: 480px) {
   .projects-grid {
-    grid-template-columns: 1fr; /* También apila los proyectos verticalmente en lugar de en 2 columnas */
+    grid-template-columns: 1fr;
   }
-
-  .skills-list {
-    grid-template-columns: 1fr; /* Las habilidades se muestran una debajo de otra en vez de en 2 columnas */
+  
+  .contact-form {
+    padding: 1.5rem;
+  }
+  
+  .socials {
+    gap: 1.2rem;
   }
 }
-/* Responsive: columnas apiladas en móvil */
-
-/* ----------------------------- Contenedor principal de las dos primeras columnas ----------------------------- */
